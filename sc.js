@@ -47,10 +47,12 @@ document.getElementById('calculateBtn').addEventListener('click', function() {
   
     // Calculate and display the lucky result
     const luckyResult = (parseInt(finalResult) * (Math.random() * 10) * (inputNumbers) / (originalSum) * (Math.random() * breakdownB) ).toFixed(0).slice(0, 4);
-    const luckyResult6 = (parseInt(finalResult) * (Math.random() + 88) * (inputNumbers) * (originalSum) / (Math.random() * breakdownA) / (breakdownB) * (breakdownC) ).toFixed(0).slice(0, 6);
     document.getElementById('luckyresult').textContent = ` ${luckyResult}`;
-    document.getElementById('luckyresult6').textContent = ` ${luckyResult6}`;
-    
+    //const luckyResult6 = (parseInt(finalResult) * (Math.random() + 88) * (inputNumbers) * (originalSum) / (Math.random() * breakdownA) / (breakdownB) * (breakdownC) ).toFixed(0).slice(0, 6);
+    //document.getElementById('luckyresult6').textContent = ` ${luckyResult6}`;
+
+    const luckyResult6 = generateUniqueRandomNumbers(6, 0, 9);
+    document.getElementById('luckyresult6').textContent = luckyResult6.join('');
 
     // Display the sections
   document.getElementById('breakdownSection').style.display = 'block';
@@ -61,3 +63,13 @@ document.getElementById('calculateBtn').addEventListener('click', function() {
   document.getElementById('txt').style.display = 'block';
   });
   
+function generateUniqueRandomNumbers(count, min, max) {
+    const uniqueNumbers = new Set();
+  
+    while (uniqueNumbers.size < count) {
+      const randomNumber = Math.floor(Math.random() * (max - min + 1)) + min ;
+      uniqueNumbers.add(randomNumber);
+    }
+  
+    return Array.from(uniqueNumbers);
+}
