@@ -34,7 +34,7 @@
                 const arabicNumber = convertToArabicNumerals(ayah.number);
                 if (showLatin) {
                     ayahElement.innerHTML = `
-                        <p class="text-right mb-4 leading-loose" style="font-size: ${fontSize}px;">${ayah.text} <span class="text-green-600 dark:text-green-400">۝${arabicNumber}</span></p>
+                        <p class="text-right mb-4 leading-loose" style="font-size: ${fontSize}px;">${ayah.text} <span class="text-green-600 dark:text-green-400">${arabicNumber}</span></p>
                         <p class="text-gray-600 dark:text-gray-400" style="font-size: ${fontSize - 4}px;">${ayah.teksLatin}</p>
                     `;
                 } else {
