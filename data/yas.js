@@ -11,7 +11,7 @@ function convertToArabicNumerals(number) {
 
 async function loadYasin() {
     try {
-        const response = await fetch('yasin.json');
+        const response = await fetch('/data/yasin.json');
         yasinData = await response.json();
         renderYasin();
     } catch (error) {
