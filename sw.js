@@ -1,9 +1,9 @@
-const cacheName = 'baca-yasindd-v1';
+const cacheName = 'baca-yasindd-v2';
 const assets = [
   '/',
   '/index.html',
   '/data/yasin.js',
-  '/data/yas.js',
+  '/data/output.css',
   '/data/yasin.json',
   '/font/bazzi-v7-full.woff2',
   '/images/192x192.png',
@@ -11,6 +11,10 @@ const assets = [
   '/images/16.png',
   '/images/32.png',
   '/audio/036001.mp3',
+  '/data/all.min.css',
+  '/webfonts/fa-solid-900.ttf',
+  '/webfonts/fa-solid-900.woff',
+  '/webfonts/fa-solid-900.woff2',
 '/audio/036002.mp3',
 '/audio/036003.mp3',
 '/audio/036004.mp3',

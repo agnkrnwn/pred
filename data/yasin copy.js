@@ -8,8 +8,6 @@
     let selectedQari = 'local';
     let reciters = [];
     let audio = new Audio();
-    let isPlaying = false;
-    let currentAudioPromise = null;
 
     function convertToArabicNumerals(number) {
         const arabicNumerals = ['٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩'];
@@ -63,26 +61,15 @@
         
         const paddedNumber = ayahNumber.toString().padStart(3, '0');
         let audioUrl;
-    
+
         if (selectedQari === 'local') {
             audioUrl = `/audio/036${paddedNumber}.mp3`;
         } else {
             audioUrl = `${selectedQari}036${paddedNumber}.mp3`;
         }
         
-        // If there's a current audio promise, cancel it
-        if (currentAudioPromise) {
-            audio.pause();
-            audio.currentTime = 0;
-            currentAudioPromise = null;
-        }
-    
         audio.src = audioUrl;
-        currentAudioPromise = audio.play().catch(error => {
-            if (error.name !== 'AbortError') {
-                console.error('Audio playback error:', error);
-            }
-        });
+        audio.play();
     }
 
     function highlightAyah(ayahNumber) {
@@ -293,68 +280,6 @@
         };
         playNext();
     }
-    function stopAudio() {
-        audio.pause();
-        audio.currentTime = 0;
-        isPlaying = false;
-        currentAudioPromise = null;
-        updatePlayAllButton();
-    }
-
-    // JavaScript update
-    function updatePlayAllButton() {
-        const playAllButton = document.getElementById('playAll');
-        if (isPlaying) {
-            playAllButton.innerHTML = '<i class="fas fa-stop"></i>';
-            playAllButton.title = 'Stop';
-        } else {
-            playAllButton.innerHTML = '<i class="fas fa-play"></i>';
-            playAllButton.title = 'Play All';
-        }
-    }
-
-    function playAllNormalMode() {
-        let currentIndex = 0;
-        const playNext = () => {
-            if (currentIndex < yasinData.ayah.length && isPlaying) {
-                playAudio(yasinData.ayah[currentIndex].number);
-                highlightAyah(yasinData.ayah[currentIndex].number);
-                currentIndex++;
-                audio.onended = playNext;
-            } else {
-                stopAudio();
-            }
-        };
-        playNext();
-    }
-
-    function playAllFocusMode() {
-        const playNext = () => {
-            if (currentAyahIndex < yasinData.ayah.length - 1 && isPlaying) {
-                currentAyahIndex++;
-                renderFocusMode();
-                audio.onended = playNext;
-            } else {
-                stopAudio();
-            }
-        };
-        renderFocusMode();
-        audio.onended = playNext;
-    }
-
-    document.getElementById('playAll').addEventListener('click', () => {
-        if (isPlaying) {
-            stopAudio();
-        } else {
-            isPlaying = true;
-            updatePlayAllButton();
-            if (isFocusMode) {
-                playAllFocusMode();
-            } else {
-                playAllNormalMode();
-            }
-        }
-    });
 
     function playAllFocusMode() {
         const playNext = () => {
@@ -375,5 +300,4 @@
     }
 
     initialize();
-    updatePlayAllButton();
 })();
