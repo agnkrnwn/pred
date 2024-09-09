@@ -275,7 +275,7 @@ function renderFocusMode() {
     });
 
     document.getElementById('nextAyah').addEventListener('click', () => {
-        if (currentAyahIndex < quranData.ayah.length - 1) {
+        if (currentAyahIndex < quranData.ayah.length - 0) {
             currentAyahIndex++;
             renderFocusMode();
         }
