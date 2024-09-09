@@ -58,8 +58,12 @@
             const response = await fetch(`/data/quran/${surahId.toString().padStart(3, '0')}.json`);
             quranData = await response.json();
             currentSurah = surahId;
+            currentAyahIndex = 0; // Reset the currentAyahIndex to 0 when loading a new surah
             renderSurah();
             saveSettings();
+            if (isFocusMode) {
+                renderFocusMode(); // Re-render focus mode with the first ayah
+            }
         } catch (error) {
             console.error('Error loading surah data:', error);
             document.getElementById('content').innerHTML = 'Error loading surah data. Please try again later.';
