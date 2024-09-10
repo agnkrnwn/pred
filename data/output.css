@@ -1062,3 +1062,47 @@ body {
     line-height: 1.25rem;
   }
 }
+
+/* .focus-mode-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.focus-mode-content {
+  flex-grow: 1;
+  overflow-y: auto;
+  padding-bottom: 60px; 
+}
+
+.focus-mode-navigation {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(255, 255, 255, 0.9);
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.dark .focus-mode-navigation {
+  background-color: rgba(31, 41, 55, 0.9);
+} */
+
+#focusMode {
+  padding-top: 60px; /* Sesuaikan dengan tinggi header Anda */
+  padding-bottom: 60px; /* Sesuaikan dengan tinggi navbar Anda */
+}
+
+.bookmark-item {
+  @apply flex items-center justify-between p-3 bg-gray-100 dark:bg-gray-700 rounded-lg transition duration-300 hover:bg-gray-200 dark:hover:bg-gray-600;
+}
+.bookmark-text {
+  @apply text-gray-800 dark:text-white cursor-pointer flex-grow;
+}
+.delete-bookmark {
+  @apply text-red-500 hover:text-red-700 transition duration-300;
+}
