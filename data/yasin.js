@@ -85,11 +85,22 @@
         });
     }
 
+    function scrollToAyah(ayahNumber) {
+        const ayahElement = document.querySelector(`.ayah[data-number="${ayahNumber}"]`);
+        if (ayahElement) {
+            ayahElement.scrollIntoView({
+                behavior: 'smooth',
+                block: 'center'
+            });
+        }
+    }
+
     function highlightAyah(ayahNumber) {
         const ayahs = document.querySelectorAll('.ayah');
         ayahs.forEach(ayah => {
             if (ayah.dataset.number == ayahNumber) {
                 ayah.classList.add('bg-yellow-100', 'dark:bg-yellow-900');
+                scrollToAyah(ayahNumber);
             } else {
                 ayah.classList.remove('bg-yellow-100', 'dark:bg-yellow-900');
             }
