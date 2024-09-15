@@ -1,6 +1,5 @@
 (() => {
     let yasinData;
-    let showLatin = false;
     let fontSize = 25;
     let isFocusMode = false;
     let currentAyahIndex = 0;
@@ -10,6 +9,7 @@
     let audio = new Audio();
     let isPlaying = false;
     let currentAudioPromise = null;
+    let showLatin = false;
 
     function convertToArabicNumerals(number) {
         const arabicNumerals = ['٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩'];
@@ -114,21 +114,15 @@
         setTimeout(() => {
             content.innerHTML = '';
             
-            yasinData.ayah.forEach(ayah => {
+            yasinData.ayah.forEach((ayah, index) => {
                 const ayahElement = document.createElement('div');
                 ayahElement.className = 'ayah bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 transition duration-300 ease-in-out transform hover:scale-105';
                 ayahElement.dataset.number = ayah.number;
                 const arabicNumber = convertToArabicNumerals(ayah.number);
-                if (showLatin) {
-                    ayahElement.innerHTML = `
-                        <p class="text-right mb-4 leading-loose" style="font-size: ${fontSize}px;">${ayah.text} <span class="text-green-600 dark:text-green-400">${arabicNumber}</span></p>
-                        <p class="text-gray-600 dark:text-gray-400" style="font-size: ${fontSize - 4}px;">${ayah.teksLatin}</p>
-                    `;
-                } else {
-                    ayahElement.innerHTML = `
-                        <p class="text-right leading-loose" style="font-size: ${fontSize}px;">${ayah.text} <span class="text-green-600 dark:text-green-400">${arabicNumber}</span></p>
-                    `;
-                }
+                ayahElement.innerHTML = `
+                    <p class="text-right mb-4 leading-loose" style="font-size: ${fontSize}px;">${ayah.text} <span class="text-green-600 dark:text-green-400">${arabicNumber}</span></p>
+                    ${showLatin ? `<p class="text-gray-600 dark:text-gray-400" style="font-size: ${fontSize - 4}px;"><span class="font-bold">${index + 1}.</span> ${ayah.teksLatin}</p>` : ''}
+                `;
                 ayahElement.addEventListener('click', () => {
                     playAudio(ayah.number);
                     highlightAyah(ayah.number);
@@ -147,13 +141,37 @@
         
         focusAyah.innerHTML = `
             <p class="text-right mb-4 leading-loose" style="font-size: ${fontSize + 8}px;">${ayah.text} <span class="text-green-600 dark:text-green-400">${arabicNumber}</span></p>
-            ${showLatin ? `<p class="text-gray-600 dark:text-gray-400" style="font-size: ${fontSize}px;">${ayah.teksLatin}</p>` : ''}
+            ${showLatin ? `<p class="text-gray-600 dark:text-gray-400" style="font-size: ${fontSize}px;"><span class="font-bold">${currentAyahIndex + 1}.</span> ${ayah.teksLatin}</p>` : ''}
         `;
 
         if (audioEnabled) {
             playAudio(ayah.number);
         }
     }
+
+    function toggleLatin() {
+        showLatin = !showLatin;
+        updateLatinIcon();
+        if (isFocusMode) {
+            renderFocusMode();
+        } else {
+            renderYasin();
+        }
+    }
+
+    function updateLatinIcon() {
+        const latinIcon = document.getElementById('latinIcon');
+        if (showLatin) {
+            latinIcon.classList.remove('fa-language');
+            latinIcon.classList.add('fa-globe');
+        } else {
+            latinIcon.classList.remove('fa-globe');
+            latinIcon.classList.add('fa-language');
+        }
+    }
+
+    // Event listener for the new toggle button
+    document.getElementById('toggleLatin').addEventListener('click', toggleLatin);
 
     function toggleFocusMode() {
         isFocusMode = !isFocusMode;
@@ -212,23 +230,7 @@
          }
      }
 
-    document.getElementById('tanpaLatin').addEventListener('click', () => {
-        showLatin = false;
-        if (isFocusMode) {
-            renderFocusMode();
-        } else {
-            renderYasin();
-        }
-    });
-
-    document.getElementById('denganLatin').addEventListener('click', () => {
-        showLatin = true;
-        if (isFocusMode) {
-            renderFocusMode();
-        } else {
-            renderYasin();
-        }
-    });
+    
 
     document.getElementById('focusModeToggle').addEventListener('click', toggleFocusMode);
 
@@ -387,4 +389,5 @@
 
     initialize();
     updatePlayAllButton();
+    updateLatinIcon();
 })();
